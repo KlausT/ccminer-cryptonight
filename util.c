@@ -36,13 +36,13 @@
 #include "miner.h"
 #include "elist.h"
 
-char* CL_N;
-char* CL_RED;
-char* CL_GRN;
-char* CL_YLW;
-char* CL_BLU;
-char* CL_MAG;
-char* CL_CYN;
+char* CL_N = "\033[0m";
+char* CL_RED = "\033[31m";
+char* CL_GRN = "\033[32m";
+char* CL_YLW = "\033[33m";
+char* CL_BLU = "\033[34m";
+char* CL_MAG = "\033[35m";
+char* CL_CYN = "\033[36m";
 
 struct data_buffer
 {
@@ -82,17 +82,7 @@ struct thread_q
 
 void color_init()
 {
-	if(opt_colors)
-	{
-		CL_N = "\033[0m";
-		CL_RED = "\033[31m";
-		CL_GRN = "\033[32m";
-		CL_YLW = "\033[33m";
-		CL_BLU = "\033[34m";
-		CL_MAG = "\033[35m";
-		CL_CYN = "\033[36m";
-	}
-	else
+	if(!opt_colors)
 	{
 		CL_N = "";
 		CL_RED = "";
@@ -153,6 +143,7 @@ void applog(int prio, const char *fmt, ...)
 			case LOG_INFO:    color = ""; break;
 			case LOG_DEBUG:   color = CL_CYN; break;
 		}
+
 		if(strlen(color) == 0)
 			reset = "";
 		else
